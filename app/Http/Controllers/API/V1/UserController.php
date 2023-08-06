@@ -70,14 +70,14 @@ class UserController extends Controller
             'password' => 'string:min:8',
         ]);
 
-        $user->update([
+        $update_result = $user->update([
             'name' => $request->name ?? $user->name,
             'email' => $request->email ?? $user->email,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
             'manager_id' => $request->manager_id ?? $user->manager_id,
         ]);
 
-        return new UserResource($user);
+        return $update_result ? UserResource::make($user) : response()->json(['message' => 'an error occured']);;
     }
 
     /**
@@ -88,7 +88,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return response()->json();
+        $delete_result = $user->delete();
+        //TODO change the error message
+        return $delete_result ? UserResource::make($user) : response()->json(['message' => 'an error occured']);
     }
 }
