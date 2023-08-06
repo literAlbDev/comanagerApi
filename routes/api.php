@@ -16,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('v1')->group(function () {
+    Route::post('/createToken', [UserController::class, 'createToken']);
 
-Route::apiResource('user', UserController::class);
-Route::apiResource('task', TaskController::class);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/me', [UserController::class, 'me']);
+        Route::delete('/revokeToken', [UserController::class, 'revokeToken']);
+
+        Route::apiResource('user', UserController::class);
+        Route::apiResource('task', TaskController::class);
+    });
+});
