@@ -18,12 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::post('/createToken', [UserController::class, 'createToken']);
+    Route::apiResource('user', UserController::class)->only('store');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [UserController::class, 'me']);
         Route::delete('/revokeToken', [UserController::class, 'revokeToken']);
 
-        Route::apiResource('user', UserController::class);
+        Route::apiResource('user', UserController::class)->except('store');
         Route::apiResource('task', TaskController::class);
     });
 });
