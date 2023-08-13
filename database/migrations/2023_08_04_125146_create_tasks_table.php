@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('status')->default('pending');
+            $table->string('reason')->nullable()->default(null);
             $table->unsignedBigInteger('worker_id');
             $table->timestamps();
         });

@@ -20,6 +20,7 @@ class TaskResource extends JsonResource
                 'title' => $this->title,
                 'description' => $this->description,
                 'status' => $this->status,
+                'reason' => $this->reason,
                 'worker' => UserResource::make($this->worker),
             ]
         ];
